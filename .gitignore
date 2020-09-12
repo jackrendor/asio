@@ -1,0 +1,6 @@
+*test*
+*.bak
+*.BAK
+*.pyc
+*venv*
+personal_shells.txt
