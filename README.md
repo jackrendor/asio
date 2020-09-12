@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ASIO
 ## Description
 ASIO (All Shell In One) is a tool written in Python3 that generates reverse shells. It has the ability to **cast a one liner that uses all the available reverse shell teqniques**
