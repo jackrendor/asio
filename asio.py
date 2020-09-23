@@ -53,7 +53,7 @@ if __name__ == "__main__":
             b64_paylaods = base64.b64encode(all_payloads.encode('utf-8')).decode('utf-8')
             print(f'\033[32mecho "{b64_paylaods}" | base64 -d | bash\033[0m')
         else:
-            print(f'\033[32{all_payloads}\033[0m')
+            print(f'\033[32m{all_payloads}\033[0m')
     else:
         for name, code in payloads:
             print(f'\n\033[92;1m {name}\033[0m')
