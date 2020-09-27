@@ -51,7 +51,7 @@ if __name__ == "__main__":
         print('\n\033[92;1m All in one\033[0m')
         if args.base64:
             b64_paylaods = base64.b64encode(all_payloads.encode('utf-8')).decode('utf-8')
-            print(f'\033[32mecho "{b64_paylaods}" | base64 -d | bash\033[0m')
+            print(f'\033[32mecho {b64_paylaods} | base64 -d | bash\033[0m')
         else:
             print(f'\033[32m{all_payloads}\033[0m')
     else:
@@ -59,6 +59,6 @@ if __name__ == "__main__":
             print(f'\n\033[92;1m {name}\033[0m')
             if args.base64:
                 b64_paylaod = base64.b64encode(code.encode('utf-8')).decode('utf-8')
-                print(f'\033[32mecho "{b64_paylaod}" | base64 -d | bash\033[0m')
+                print(f'\033[32mecho {b64_paylaod} | base64 -d | bash\033[0m')
             else:
                 print(f'\033[32m{code}\033[0m')
