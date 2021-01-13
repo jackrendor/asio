@@ -24,17 +24,12 @@ def parse_arguments():
 
 def generate(HOST="127.0.0.1", PORT=4444):
     result = []
-    for line in read_file("personal_shells.txt"):
-        payload_name, payload_code = line.split('|', 1)
+    for filename in ["personal_shells.txt", "default_shells.txt"]:
+        for line in read_file(filename):
+            payload_name, payload_code = line.split('|', 1)
 
-        ready_payload = payload_code.replace("{HOST}", HOST).replace("{PORT}", PORT)
-        result.append((payload_name, ready_payload))
-    
-    for line in read_file("default_shells.txt"):
-        payload_name, payload_code = line.split('|', 1)
-
-        ready_payload = payload_code.replace("{HOST}", HOST).replace("{PORT}", PORT)
-        result.append((payload_name, ready_payload))
+            ready_payload = payload_code.replace("{HOST}", HOST).replace("{PORT}", PORT)
+            result.append((payload_name, ready_payload))
     return result
 
 if __name__ == "__main__":
