@@ -4,6 +4,7 @@ import os
 import argparse
 import base64
 
+# Read the default_shells.txt to load in all available shells.
 def read_file(filename=None):
     FULLPATH = os.path.dirname(os.path.realpath(__file__)) + "/" + filename
     with open(FULLPATH) as shell_file:
@@ -12,6 +13,7 @@ def read_file(filename=None):
             if not payload.startswith("#"):
                 yield payload
 
+# Parse given arguments and assign them.
 def parse_arguments():
     parser = argparse.ArgumentParser()
     
@@ -22,6 +24,7 @@ def parse_arguments():
 
     return parser.parse_args()
 
+# Generate reverse shells based on given arguments
 def generate(HOST="127.0.0.1", PORT=4444):
     result = []
     for filename in ["personal_shells.txt", "default_shells.txt"]:
@@ -32,6 +35,7 @@ def generate(HOST="127.0.0.1", PORT=4444):
             result.append((payload_name, ready_payload))
     return result
 
+# Run the script and output the available shells based on given arguments
 if __name__ == "__main__":
     args = parse_arguments()
     
